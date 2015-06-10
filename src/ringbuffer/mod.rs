@@ -1,7 +1,7 @@
 #![allow(dead_code)]
 // Copyright 2012-2014 Dustin Hiatt. See the COPYRIGHT
 // file at the top-level directory.
-// 
+//
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
 // http://www.apache.org/licenses/LICENSE-2.0> or the MIT license
 // <LICENSE-MIT or http://opensource.org/licenses/MIT>, at your
@@ -40,10 +40,10 @@
 ///
 /// ```
 /// use marble::ringbuffer::RingBuffer;
-/// 
+///
 /// use std::sync::Arc;
 /// use std::thread;
-/// 
+///
 /// let rb = Arc::new(RingBuffer::new(1));
 ///
 /// let rbc = rb.clone();
@@ -53,7 +53,7 @@
 /// 		match result {
 /// 			Err(_) => break,
 /// 			_ => ()
-///			}	
+///			}
 ///		}
 /// });
 ///
@@ -68,7 +68,7 @@ use std::marker;
 use std::mem;
 use std::ptr;
 use std::sync::atomic::{ATOMIC_BOOL_INIT, ATOMIC_USIZE_INIT, AtomicBool, AtomicUsize, Ordering};
-use std::thread::yield_now;
+//use std::thread::yield_now; TODO
 use std::vec::Vec;
 
 // Node will wrap items in the buffer and keep track of enough
@@ -149,7 +149,7 @@ pub enum RingBufferError { Disposed }
 impl<T> RingBuffer<T> {
 	/// new creates a new RingBuffer with the specified capacity.  It
 	/// is important to note that capacity will be rounded up to the next
-	/// power of two.  This is done to improve performance by avoiding a 
+	/// power of two.  This is done to improve performance by avoiding a
 	/// costly modulo call.  To get the actual capacity of the ring buffer
 	/// call cap().
 	pub fn new(cap: usize) -> RingBuffer<T> {
@@ -241,7 +241,7 @@ impl<T> RingBuffer<T> {
 				spins -= 1;
 			}
 
-			yield_now();
+			//yield_now(); TODO
 		}
 
 		Err(RingBufferError::Disposed)
@@ -344,7 +344,7 @@ mod rbtest {
 		let result = rb.get();
 		match result {
 			Ok(_) => panic!("Should return error."),
-			_ => () 
+			_ => ()
 		}
 
 		let result = rb.put(());
